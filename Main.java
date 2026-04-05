@@ -7,8 +7,11 @@ public class Main {
     static ArrayList<Product>   menu         = new ArrayList<>();  // polymorphic list
     static Cart                 cart         = new Cart();
     static OrderManager         orderManager = new OrderManager();
+    static StaffLogin           staffLogin   = new StaffLogin();
+    static Staff                currentStaff = null;
 
     public static void main(String[] args) {
+        loginSystem();
         loadMenu();
         printBanner();
 
@@ -48,6 +51,24 @@ public class Main {
         scanner.close();
     }
 
+    static void loginSystem()
+    {
+        System.out.println("===== STAFF LOGIN =====");
+
+        while (currentStaff == null)
+        {
+            System.out.print("Enter Staff ID: ");
+            String id = scanner.nextLine();
+
+            System.out.print("Enter Password: ");
+            String pass = scanner.nextLine();
+
+            currentStaff = staffLogin.login(id, pass);
+        }
+
+        System.out.println("Logged in as: " + currentStaff.getName() + " (" + currentStaff.getRole() + ")");
+    }
+    
     static void loadMenu() {
         // Bread(pID, pName, bPrice, qInStock, cat, isSliced)
         menu.add(new Bread("B001", "White Sandwich Loaf", 4.50, 20, "Bread", true));
@@ -166,6 +187,16 @@ public class Main {
         if (name.isEmpty()) {
             System.out.println("  Name cannot be empty. Order cancelled.");
             return;
+        }
+        
+        Discount discount = new Discount();
+
+        System.out.print("Enter discount code (or press Enter to skip): ");
+        String code = scanner.nextLine().trim();
+
+        if (!code.isEmpty()) {
+            String message = discount.validateCode(code);
+            System.out.println(message);
         }
 
         System.out.print("  Confirm order? (Y/N): ");
