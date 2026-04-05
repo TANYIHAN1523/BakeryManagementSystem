@@ -1,15 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-/**
- * Entry point and menu controller for the Bakery Management System.
- *
- * Concepts demonstrated:
- *  - Polymorphism : ArrayList<Product> holds Bread, Cake, and Pastry objects
- *  - Selection    : switch statements for menu choices
- *  - Loops        : while loops keep menus running until user exits
- *  - ArrayList    : used for the product menu list
- */
 public class Main {
 
     static Scanner              scanner      = new Scanner(System.in);
@@ -57,14 +48,6 @@ public class Main {
         scanner.close();
     }
 
-    // ======================================================================
-    // MENU DATA
-    // ======================================================================
-
-    /**
-     * Pre-loads the bakery's products into the menu ArrayList.
-     * Demonstrates polymorphism: Bread, Cake, Pastry objects stored as Product.
-     */
     static void loadMenu() {
         // Bread(pID, pName, bPrice, qInStock, cat, isSliced)
         menu.add(new Bread("B001", "White Sandwich Loaf", 4.50, 20, "Bread", true));
@@ -82,10 +65,6 @@ public class Main {
         menu.add(new Cake("C002", "Vanilla Sponge Cake",   22.00, 5, "Cake", "Congratulations!", 0.8));
         menu.add(new Cake("C003", "Birthday Special Cake", 55.00, 3, "Cake", "Happy Birthday!", 2.0));
     }
-
-    // ======================================================================
-    // DISPLAY HELPERS
-    // ======================================================================
 
     static void printBanner() {
         System.out.println("  ============================================");
@@ -108,11 +87,6 @@ public class Main {
         System.out.println("  ================================");
     }
 
-    /**
-     * Displays all products using their displayProduct() method.
-     * Since displayProduct() is abstract in Product, each subclass
-     * (Bread, Pastry, Cake) runs its own version -- this is polymorphism.
-     */
     static void viewMenu() {
         System.out.println();
         System.out.println("  ============================================");
@@ -127,14 +101,6 @@ public class Main {
         System.out.println("  ============================================");
     }
 
-    // ======================================================================
-    // CART ACTIONS
-    // ======================================================================
-
-    /**
-     * Prompts the user to enter a product ID and quantity, then adds it to the cart.
-     * Cart.addItem() handles stock checking via Product.isAvailable().
-     */
     static void addToCart() {
         viewMenu();
         System.out.print("\n  Enter Product ID to add (or 0 to cancel): ");
@@ -156,7 +122,6 @@ public class Main {
             return;
         }
 
-        // Show the selected product's details using its own displayProduct()
         System.out.println("\n  Selected:");
         System.out.println("  ------------------------------------------");
         selected.displayProduct();
@@ -170,9 +135,6 @@ public class Main {
         // if addItem() returned false, Cart already printed the reason
     }
 
-    /**
-     * Lets the user remove an item from the cart by its displayed number.
-     */
     static void removeFromCart() {
         if (cart.isEmpty()) {
             System.out.println("  Your cart is empty. Nothing to remove.");
@@ -191,17 +153,6 @@ public class Main {
         }
     }
 
-    // ======================================================================
-    // ORDER ACTIONS
-    // ======================================================================
-
-    /**
-     * Checks out the current cart:
-     *  - Shows cart summary and total
-     *  - Asks for customer name and confirmation
-     *  - Creates an Order (which deducts stock via updateStock())
-     *  - Prints receipt and clears the cart
-     */
     static void placeOrder() {
         if (cart.isEmpty()) {
             System.out.println("  Your cart is empty. Add items before placing an order.");
@@ -231,13 +182,6 @@ public class Main {
         }
     }
 
-    // ======================================================================
-    // INPUT HELPER
-    // ======================================================================
-
-    /**
-     * Safely reads an integer, keeps prompting until valid input is given.
-     */
     static int getIntInput(String prompt) {
         while (true) {
             System.out.print(prompt);
