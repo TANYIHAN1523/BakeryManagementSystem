@@ -1,8 +1,4 @@
-/**
- * Represents one entry in the cart: a Product and how many the customer wants.
- *
- * OO Concepts: Encapsulation, Composition (contains a Product)
- */
+
 public class CartItem {
 
     private Product item;
@@ -17,7 +13,6 @@ public class CartItem {
     public int     getQuantity()        { return quantity; }
     public void    setQuantity(int qty) { quantity = qty;  }
 
-    // Subtotal = base price x quantity
     public double getSubtotal() {
         return item.getPrice() * quantity;
     }
