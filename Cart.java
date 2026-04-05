@@ -1,45 +1,26 @@
 import java.util.ArrayList;
 
-/**
- * The customer's shopping cart — holds CartItems before an order is placed.
- *
- * OO Concepts:
- *  - Encapsulation : private ArrayList managed via public methods
- *  - ArrayList     : dynamically stores CartItem objects
- */
 public class Cart {
 
     private ArrayList<CartItem> cartItems;
 
     public Cart() {
         cartItems = new ArrayList<>();
-    }
 
-    /**
-     * Adds a Product to the cart.
-     *
-     * Uses Product.isAvailable() to check stock before adding.
-     * If the item is already in the cart, increases its quantity instead.
-     *
-     * @param product  the Product to add
-     * @param quantity number of units
-     * @return true if added successfully, false if quantity is invalid or out of stock
-     */
     public boolean addItem(Product product, int quantity) {
-        // Validate quantity range
+
         if (quantity <= 0 || quantity > 99) {
             System.out.println("  Invalid quantity. Must be between 1 and 99.");
             return false;
         }
 
-        // Check stock using Product's own isAvailable() method
         if (!product.isAvailable(quantity)) {
             System.out.println("  Sorry, not enough stock for \"" + product.getName()
                     + "\". Available: " + product.getQuantityInStock());
             return false;
         }
 
-        // Check if this product is already in the cart
+
         for (CartItem ci : cartItems) {
             if (ci.getItem().getID().equals(product.getID())) {
                 // Check combined quantity still fits in stock
@@ -54,19 +35,13 @@ public class Cart {
             }
         }
 
-        // Product not in cart yet -- add a new CartItem
+
         cartItems.add(new CartItem(product, quantity));
         return true;
     }
 
-    /**
-     * Removes a cart entry by its displayed number (1-based).
-     *
-     * @param displayNumber the 1-based number shown in the cart view
-     * @return true if removed, false if number is out of range
-     */
     public boolean removeItem(int displayNumber) {
-        int index = displayNumber - 1; // convert 1-based display to 0-based index
+        int index = displayNumber - 1;
         if (index >= 0 && index < cartItems.size()) {
             cartItems.remove(index);
             return true;
@@ -74,18 +49,10 @@ public class Cart {
         return false;
     }
 
-    /**
-     * Clears all items from the cart (called after a successful order).
-     */
     public void clear() {
         cartItems.clear();
     }
 
-    /**
-     * Calculates the total price of all items in the cart.
-     *
-     * @return total in RM
-     */
     public double getTotal() {
         double total = 0;
         for (CartItem ci : cartItems) {
@@ -97,9 +64,6 @@ public class Cart {
     public boolean             isEmpty()      { return cartItems.isEmpty(); }
     public ArrayList<CartItem> getCartItems() { return cartItems;           }
 
-    /**
-     * Prints all cart contents to the console.
-     */
     public void displayCart() {
         System.out.println();
         System.out.println("  ==========================================");
